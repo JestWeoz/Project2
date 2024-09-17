@@ -25,7 +25,7 @@ public class BuildingRepositoryImpl implements BuildingRepository {
     @Override
     public List<BuildingEntity> findAll(String name, Long districtID, String street, String ward, Long numberOfBasement, Long floorArea, Long area1, Long area2, Long rent1, Long rent2, List<Long> rentTypeId) {
 
-        StringBuilder sql = new StringBuilder("select building.* from building");
+        StringBuilder sql = new StringBuilder("select building.*, district.name from building join district on district.id = building.districtID");
         if(rentTypeId != null && !rentTypeId.isEmpty()) {
             joinTable(rentTypeId, sql);
             sql.append (" where 1=1 and renttypeid in (");
@@ -39,10 +39,10 @@ public class BuildingRepositoryImpl implements BuildingRepository {
             }
             sql.append (" group by building.id having COUNT(DISTINCT renttypeid) = " + rentTypeId.size());
         } else {
-            sql.append(" where 1=1 and");
+            sql.append(" where 1=1");
         }
         if (name != null && !name.equals("")) {
-            sql.append(" name like '%" + name + "%'");
+            sql.append(" and name like '%" + name + "%'");
         }
         if (districtID != null) {
             sql.append(" and districtId = " + districtID);
@@ -81,10 +81,10 @@ public class BuildingRepositoryImpl implements BuildingRepository {
                 dto.setWard(rs.getString("ward"));
                 dto.setStreet(rs.getString("street"));
                 dto.setNumberOfBasement(rs.getInt("numberOfBasement"));
-                dto.setDistrictId(rs.getLong("districtId"));
+                dto.setDistrict(rs.getString("district.name"));
                 dto.setFloorArea(rs.getLong("floorArea"));
-                dto.setNameManager(rs.getString("nameManager"));
-                dto.setPhoneNumberManager(rs.getString("phoneNumberManager"));
+                dto.setNameManager(rs.getString("managerName"));
+                dto.setPhoneNumberManager(rs.getString("managerPhoneNumber"));
                 dto.setRentPrice(rs.getLong(("rentPrice")));
                 results.add(dto);
             }

@@ -21,12 +21,22 @@ public class BuildingServiceImpl implements BuildingService {
         List<BuildingEntity> buildingEntities = buildingRepository.findAll(name,  districtID,  street,  ward,  numberOfBasement,  floorArea,  area1,  area2,  rent1,  rent2,  rentTypeId);
         List<BuildingDTO> buildingDTOS = new ArrayList<>();
         for (BuildingEntity item : buildingEntities) {
-            BuildingDTO buildingDTO = new BuildingDTO();
-            buildingDTO.setBuildingName(item.getName());
-            buildingDTO.setAddress(item.getStreet() + ", " + item.getWard() + ", " + "districtId = " + item.getDistrictId());
-            buildingDTO.setNumberOfBasement(item.getNumberOfBasement());
+            BuildingDTO buildingDTO = getBuildingDTO(item);
             buildingDTOS.add(buildingDTO);
         }
         return buildingDTOS;
+    }
+
+    private static BuildingDTO getBuildingDTO(BuildingEntity item) {
+        BuildingDTO buildingDTO = new BuildingDTO();
+        buildingDTO.setBuildingName(item.getName());
+        buildingDTO.setAddress(item.getStreet() + ", " + item.getWard() + ", " + "districtId = " + item.getDistrict());
+        buildingDTO.setNumberOfBasement(item.getNumberOfBasement());
+        buildingDTO.setFloorArea(item.getFloorArea());
+        buildingDTO.setManagerName(item.getNameManager());
+        buildingDTO.setPhoneNumber(item.getPhoneNumberManager());
+        buildingDTO.setRentPrice(item.getRentPrice());
+        buildingDTO.setFloorArea(item.getFloorArea());
+        return buildingDTO;
     }
 }

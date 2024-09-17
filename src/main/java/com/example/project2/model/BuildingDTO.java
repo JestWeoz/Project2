@@ -76,6 +76,10 @@ public class BuildingDTO {
         this.phoneNumber = phoneNumber;
     }
 
+    public void setRentPrice(long rentPrice) {
+        this.rentPrice = rentPrice;
+    }
+
     public String getManagerName() {
         return managerName;
     }
