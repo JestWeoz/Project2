@@ -41,16 +41,16 @@ public class BuildingRepositoryImpl implements BuildingRepository {
         } else {
             sql.append(" where 1=1");
         }
-        if (name != null && !name.equals("")) {
-            sql.append(" and name like '%" + name + "%'");
+        if (name != null && !name.isEmpty()) {
+            sql.append(" and building.name like '%" + name + "%'");
         }
         if (districtID != null) {
             sql.append(" and districtId = " + districtID);
         }
-        if (street != null && !street.equals("")) {
+        if (street != null && !street.isEmpty()) {
             sql.append(" and street like '%" + street + "%'");
         }
-        if (ward != null && !ward.equals("")) {
+        if (ward != null && !ward.isEmpty()) {
             sql.append(" and ward like '%" + ward + "%'");
         }
         if (numberOfBasement != null) {
