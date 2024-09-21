@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @Service
 
@@ -16,9 +18,9 @@ public class BuildingServiceImpl implements BuildingService {
     @Autowired
     private BuildingRepository buildingRepository;
     @Override
-    public List<BuildingDTO> findAll(String name, Long districtID, String street, String ward, Long numberOfBasement, Long floorArea, Long area1, Long area2, Long rent1, Long rent2, List<Long> rentTypeId) {
+    public List<BuildingDTO> findAll(Map<String, Object> params, List<String> rentTypeCode) {
 
-        List<BuildingEntity> buildingEntities = buildingRepository.findAll(name,  districtID,  street,  ward,  numberOfBasement,  floorArea,  area1,  area2,  rent1,  rent2,  rentTypeId);
+        List<BuildingEntity> buildingEntities = buildingRepository.findAll(params, rentTypeCode);
         List<BuildingDTO> buildingDTOS = new ArrayList<>();
         for (BuildingEntity item : buildingEntities) {
             BuildingDTO buildingDTO = getBuildingDTO(item);

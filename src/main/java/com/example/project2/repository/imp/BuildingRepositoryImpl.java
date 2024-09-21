@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @Repository
 
@@ -16,61 +18,11 @@ public class BuildingRepositoryImpl implements BuildingRepository {
     static final String PASS = "123456";
 
 
-    void joinTable (List<Long> rentTypeId, StringBuilder sql) {
-        if (rentTypeId != null && !rentTypeId.isEmpty()) {
-            sql.append(" join buildingrenttype brt on brt.buildingid = building.id");
-            sql.append(" join rentType rt on rt.id = brt.rentTypeID");
-        }
+    void joinTable (Map<String, Object> params, List<String> rentTypeCode) {
+        
     }
     @Override
-    public List<BuildingEntity> findAll(String name, Long districtID, String street, String ward, Long numberOfBasement, Long floorArea, Long area1, Long area2, Long rent1, Long rent2, List<Long> rentTypeId) {
-
-        StringBuilder sql = new StringBuilder("select building.*, district.name from building join district on district.id = building.districtID");
-        if(rentTypeId != null && !rentTypeId.isEmpty()) {
-            joinTable(rentTypeId, sql);
-            sql.append (" where 1=1 and renttypeid in (");
-            for (int i = 1; i <= rentTypeId.size(); i++) {
-                if (i == rentTypeId.size()) {
-                    sql.append (rentTypeId.get(i - 1) + ")");
-                }
-                else {
-                    sql.append (rentTypeId.get(i - 1) + ",");
-                }
-            }
-            sql.append (" group by building.id having COUNT(DISTINCT renttypeid) = " + rentTypeId.size());
-        } else {
-            sql.append(" where 1=1");
-        }
-        if (name != null && !name.isEmpty()) {
-            sql.append(" and building.name like '%" + name + "%'");
-        }
-        if (districtID != null) {
-            sql.append(" and districtId = " + districtID);
-        }
-        if (street != null && !street.isEmpty()) {
-            sql.append(" and street like '%" + street + "%'");
-        }
-        if (ward != null && !ward.isEmpty()) {
-            sql.append(" and ward like '%" + ward + "%'");
-        }
-        if (numberOfBasement != null) {
-            sql.append(" and numberOfBasement = " + numberOfBasement);
-        }
-        if (floorArea != null) {
-            sql.append(" and floorArea = " + floorArea);
-        }
-        if (area1 != null) {
-            sql.append(" and floorArea >= " + area1);
-        }
-        if (area2 != null) {
-            sql.append(" and floorArea <= " + area2);
-        }
-        if (rent1 != null) {
-            sql.append(" and rentprice >= " + rent1);
-        }
-        if (rent2 != null) {
-            sql.append(" and rentprice <= " + rent2);
-        }
+    public List<BuildingEntity> findAll(Map<String, Object> params, List<String> rentTypeCode) {
         List<BuildingEntity> results = new ArrayList<BuildingEntity>();
         try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
              Statement stmt = conn.createStatement();
