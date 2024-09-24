@@ -18,11 +18,31 @@ public class BuildingRepositoryImpl implements BuildingRepository {
     static final String PASS = "123456";
 
 
-    void joinTable (Map<String, Object> params, List<String> rentTypeCode) {
-        
+    public static void joinTable (Map<String, Object> params, List<String> TypeCode, StringBuilder sql) {
+        String staffId = String.valueOf(params.get("staffId"));
+        if(staffId == null || staffId.equals("")) {
+            sql.append(" INNER JOIN assignmentbuilding ON b.id = assignmentbuilding.buildingid ");
+        }
+        if (TypeCode != null && !TypeCode.isEmpty()) {
+            sql.append(" INNER JOIN buildingrenttype on b.id = buildingrenttype.buildingid ");
+            sql.append(" INNER JOIN renttype on renttype.id = buildingrenttype.renttypeid ");
+        }
+        String rentAreaTo = String.valueOf(params.get("areaTo"));
+        String rentAreaFrom = String.valueOf(params.get("areaFrom"));
+        if (rentAreaTo == null || rentAreaTo.equals("") || rentAreaFrom == null || rentAreaFrom.equals("")) {
+            sql.append(" INNER JOIN rentarea on rentarea.buildingid = b.id ");
+        }
     }
+    public static void query(Map<String, Object> params, List<String> TypeCode, StringBuilder sql) {
+
+    }
+
+
     @Override
     public List<BuildingEntity> findAll(Map<String, Object> params, List<String> rentTypeCode) {
+        StringBuilder sql = new StringBuilder("SELECT * FROM building b ");
+        joinTable(params, rentTypeCode, sql);
+
         List<BuildingEntity> results = new ArrayList<BuildingEntity>();
         try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
              Statement stmt = conn.createStatement();
