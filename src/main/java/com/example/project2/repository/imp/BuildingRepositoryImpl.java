@@ -3,12 +3,10 @@ package com.example.project2.repository.imp;
 import com.example.project2.repository.BuildingRepository;
 import com.example.project2.repository.entity.BuildingEntity;
 import org.springframework.stereotype.Repository;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @Repository
 
@@ -18,18 +16,18 @@ public class BuildingRepositoryImpl implements BuildingRepository {
     static final String PASS = "123456";
 
 
-    public static void joinTable (Map<String, Object> params, List<String> TypeCode, StringBuilder sql) {
+    public static void joinTable (Map<String, Object> params, List<String> typeCode, StringBuilder sql) {
         String staffId = String.valueOf(params.get("staffId"));
         if(staffId == null || staffId.equals("")) {
             sql.append(" INNER JOIN assignmentbuilding ON b.id = assignmentbuilding.buildingid ");
         }
-        if (TypeCode != null && !TypeCode.isEmpty()) {
+        if (typeCode != null && !typeCode.isEmpty()) {
             sql.append(" INNER JOIN buildingrenttype on b.id = buildingrenttype.buildingid ");
             sql.append(" INNER JOIN renttype on renttype.id = buildingrenttype.renttypeid ");
         }
         String rentAreaTo = String.valueOf(params.get("areaTo"));
         String rentAreaFrom = String.valueOf(params.get("areaFrom"));
-        if (rentAreaTo == null || rentAreaTo.equals("") || rentAreaFrom == null || rentAreaFrom.equals("")) {
+        if (rentAreaTo != null && !rentAreaTo.equals("") || rentAreaFrom != null && !rentAreaFrom.equals("")) {
             sql.append(" INNER JOIN rentarea on rentarea.buildingid = b.id ");
         }
     }
@@ -39,10 +37,10 @@ public class BuildingRepositoryImpl implements BuildingRepository {
 
 
     @Override
-    public List<BuildingEntity> findAll(Map<String, Object> params, List<String> rentTypeCode) {
+    public List<BuildingEntity> findAll(Map<String, Object> params, List<String> typeCode) {
         StringBuilder sql = new StringBuilder("SELECT * FROM building b ");
-        joinTable(params, rentTypeCode, sql);
-
+        joinTable(params, typeCode, sql);
+        System.out.println(sql);
         List<BuildingEntity> results = new ArrayList<BuildingEntity>();
         try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
              Statement stmt = conn.createStatement();

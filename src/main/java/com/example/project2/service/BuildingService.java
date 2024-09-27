@@ -9,5 +9,5 @@ import java.util.Objects;
 
 
 public interface BuildingService {
-    List<BuildingDTO> findAll(Map<String, Object> params, List<String> rentTypeCode);
+    List<BuildingDTO> findAll(Map<String, Object> params, List<String> typeCode);
 }
