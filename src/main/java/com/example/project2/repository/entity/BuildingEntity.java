@@ -155,4 +155,8 @@ public class BuildingEntity {
 
     public void setNumberOfBasement(Integer numberOfBasement) {
         this.numberOfBasement = numberOfBasement;
-    }}
+    }
+
+    public void setDistrictid(long aLong) {
+    }
+}

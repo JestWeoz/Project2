@@ -66,28 +66,35 @@ public class BuildingRepositoryImpl implements BuildingRepository {
         if (StringUtil.checkString(rentPriceTo)) {
             where.append(" AND rentprice.value <=" + rentPriceTo + " ");
         }
+        if (typeCode != null && !typeCode.isEmpty()) {
+            where.append (" AND renttype.code IN (" + String.join(",", typeCode) + ") ");
+        }
     }
 
     @Override
     public List<BuildingEntity> findAll(Map<String, Object> params, List<String> typeCode) {
-        StringBuilder sql = new StringBuilder("SELECT * FROM building b ");
+        StringBuilder sql = new StringBuilder(" SELECT * FROM building b ");
         joinTable(params, typeCode, sql);
-        System.out.println(sql);
+        StringBuilder where = new StringBuilder(" WHERE 1 = 1 ");
+        queryNormal(params, where);
+        querySpecial(params, typeCode, where);
+        sql.append(where.toString());
         List<BuildingEntity> results = new ArrayList<BuildingEntity>();
         try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql.toString())) {
             while (rs.next()) {
                 BuildingEntity dto = new BuildingEntity();
-                dto.setName(rs.getString("name"));
-                dto.setWard(rs.getString("ward"));
-                dto.setStreet(rs.getString("street"));
-                dto.setNumberOfBasement(rs.getInt("numberOfBasement"));
-                dto.setDistrict(rs.getString("district.name"));
-                dto.setFloorArea(rs.getLong("floorArea"));
-                dto.setNameManager(rs.getString("managerName"));
-                dto.setPhoneNumberManager(rs.getString("managerPhoneNumber"));
-                dto.setRentPrice(rs.getLong(("rentPrice")));
+                dto.setId(rs.getLong("b.id"));
+                dto.setName(rs.getString("b.name"));
+                dto.setWard(rs.getString("b.ward"));
+                dto.setDistrictid(rs.getLong("b.districtid"))
+                dto.setStreet(rs.getString("b.street"));
+                dto.setNumberOfBasement(rs.getInt("b.numberOfBasement"));
+                dto.setFloorArea(rs.getLong("b.floorArea"));
+                dto.setNameManager(rs.getString("b.managerName"));
+                dto.setPhoneNumberManager(rs.getString("b.managerPhoneNumber"));
+                dto.setRentPrice(rs.getLong(("b.rentPrice")));
                 results.add(dto);
             }
         } catch (SQLException e) {
