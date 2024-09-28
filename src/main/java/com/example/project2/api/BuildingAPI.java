@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -17,7 +18,7 @@ public class BuildingAPI {
     private BuildingService buildingService;
     @GetMapping(value="/api/building/")
     public List<BuildingDTO> building(@RequestParam Map<String, Object> params,
-                                      @RequestParam List<String> typeCode) {
+                                      @RequestParam(value = "typeCode", required = false) List<String> typeCode) {
         return buildingService.findAll(params, typeCode);
     }
 }

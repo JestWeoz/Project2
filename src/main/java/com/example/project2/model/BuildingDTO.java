@@ -88,8 +88,8 @@ public class BuildingDTO {
         this.managerName = managerName;
     }
 
-    public long getNumberOfBasement() {
-        return numberOfBasement;
+    public long getNumberOfBasement(long numberOfBasement) {
+        return this.numberOfBasement;
     }
 
     public void setNumberOfBasement(long numberOfBasement) {

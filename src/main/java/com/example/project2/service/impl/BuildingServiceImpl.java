@@ -32,13 +32,12 @@ public class BuildingServiceImpl implements BuildingService {
     private static BuildingDTO getBuildingDTO(BuildingEntity item) {
         BuildingDTO buildingDTO = new BuildingDTO();
         buildingDTO.setBuildingName(item.getName());
-        buildingDTO.setAddress(item.getStreet() + ", " + item.getWard() + ", " + "districtId = " + item.getDistrict());
-        buildingDTO.setNumberOfBasement(item.getNumberOfBasement());
+        buildingDTO.setPhoneNumber(item.getManagerPhoneNumber());
+        buildingDTO.setAddress(item.getStreet() + ", " + item.getWard());
         buildingDTO.setFloorArea(item.getFloorArea());
-        buildingDTO.setManagerName(item.getNameManager());
-        buildingDTO.setPhoneNumber(item.getPhoneNumberManager());
+        buildingDTO.setManagerName(item.getManagerName());
         buildingDTO.setRentPrice(item.getRentPrice());
-        buildingDTO.setFloorArea(item.getFloorArea());
+        buildingDTO.getNumberOfBasement(item.getNumberOfBasement());
         return buildingDTO;
     }
 }

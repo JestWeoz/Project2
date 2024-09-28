@@ -35,7 +35,7 @@ public class BuildingRepositoryImpl implements BuildingRepository {
     }
     public static void queryNormal(Map<String, Object> params, StringBuilder where) {
         for(Map.Entry<String, Object> entry : params.entrySet()) {
-            if(!entry.equals("staffId") && !entry.equals("typeCode") && !entry.getKey().startsWith("area") && !entry.getKey().startsWith("rentPrice")) {
+            if(!entry.getKey().equals("staffId") && !entry.getKey().equals("typeCode") && !entry.getKey().startsWith("area") && !entry.getKey().startsWith("rentPrice")) {
                 String value = String.valueOf(entry.getValue());
                 if (NumberUtil.isNumber(value)) {
                     where.append(" AND b.").append(entry.getKey()).append(" = ").append(value).append(" ");
@@ -61,10 +61,10 @@ public class BuildingRepositoryImpl implements BuildingRepository {
         String rentPriceTo = String.valueOf(params.get("rentPriceTo"));
         String rentPriceFrom = String.valueOf(params.get("rentPriceFrom"));
         if (StringUtil.checkString(rentPriceFrom)) {
-            where.append(" AND rentprice.value >=" + rentPriceFrom + " ");
+            where.append(" AND b.rentprice >=" + rentPriceFrom + " ");
         }
         if (StringUtil.checkString(rentPriceTo)) {
-            where.append(" AND rentprice.value <=" + rentPriceTo + " ");
+            where.append(" AND b.rentprice <=" + rentPriceTo + " ");
         }
         if (typeCode != null && !typeCode.isEmpty()) {
             where.append (" AND renttype.code IN (" + String.join(",", typeCode) + ") ");
@@ -85,16 +85,15 @@ public class BuildingRepositoryImpl implements BuildingRepository {
              ResultSet rs = stmt.executeQuery(sql.toString())) {
             while (rs.next()) {
                 BuildingEntity dto = new BuildingEntity();
-                dto.setId(rs.getLong("b.id"));
                 dto.setName(rs.getString("b.name"));
-                dto.setWard(rs.getString("b.ward"));
-                dto.setDistrictid(rs.getLong("b.districtid"))
+                dto.setId(rs.getInt("b.id"));
                 dto.setStreet(rs.getString("b.street"));
-                dto.setNumberOfBasement(rs.getInt("b.numberOfBasement"));
-                dto.setFloorArea(rs.getLong("b.floorArea"));
-                dto.setNameManager(rs.getString("b.managerName"));
-                dto.setPhoneNumberManager(rs.getString("b.managerPhoneNumber"));
-                dto.setRentPrice(rs.getLong(("b.rentPrice")));
+                dto.setWard(rs.getString("b.ward"));
+                dto.setRentPrice(rs.getLong("b.rentPrice"));
+                dto.setNumberOfBasement(rs.getInt("b.numberofbasement"));
+                dto.setManagerPhoneNumber(rs.getString("b.managerphonenumber"));
+                dto.setManagerName(rs.getString("b.managername"));
+                dto.setFloorArea(rs.getLong("b.floorarea"));
                 results.add(dto);
             }
         } catch (SQLException e) {
@@ -104,3 +103,4 @@ public class BuildingRepositoryImpl implements BuildingRepository {
         return results;
     }
 }
+
