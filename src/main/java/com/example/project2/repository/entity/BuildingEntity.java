@@ -4,8 +4,8 @@ public class BuildingEntity {
     private int id;
     private String name;
     private String street;
+    private int districtId;
     private String ward;
-    private String district;
     private long numberOfBasement;
     private long floorArea, rentPrice;
     private String managerName, managerPhoneNumber;
@@ -13,7 +13,13 @@ public class BuildingEntity {
     public int getId() {
         return id;
     }
+    public int getDistrictId() {
+        return districtId;
+    }
 
+    public void setDistrictId(int districtId) {
+        this.districtId = districtId;
+    }
     public void setId(int id) {
         this.id = id;
     }
@@ -40,14 +46,6 @@ public class BuildingEntity {
 
     public void setWard(String ward) {
         this.ward = ward;
-    }
-
-    public String getDistrict() {
-        return district;
-    }
-
-    public void setDistrict(String district) {
-        this.district = district;
     }
 
     public long getNumberOfBasement() {

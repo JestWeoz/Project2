@@ -67,18 +67,24 @@ public class BuildingRepositoryImpl implements BuildingRepository {
             where.append(" AND b.rentprice <=" + rentPriceTo + " ");
         }
         if (typeCode != null && !typeCode.isEmpty()) {
-            where.append (" AND renttype.code IN (" + String.join(",", typeCode) + ") ");
+            List<String> code = new ArrayList<>();
+            for (String type : typeCode) {
+                code.add("'" + type + "'");
+            };
+            where.append(" AND renttype.code in (" + String.join(",", code) + ")");
         }
     }
 
     @Override
     public List<BuildingEntity> findAll(Map<String, Object> params, List<String> typeCode) {
-        StringBuilder sql = new StringBuilder(" SELECT * FROM building b ");
+        StringBuilder sql = new StringBuilder(" SELECT b.* FROM building b ");
         joinTable(params, typeCode, sql);
         StringBuilder where = new StringBuilder(" WHERE 1 = 1 ");
         queryNormal(params, where);
         querySpecial(params, typeCode, where);
+        where.append(" ORDER BY b.id ");
         sql.append(where.toString());
+        System.out.println(sql.toString());
         List<BuildingEntity> results = new ArrayList<BuildingEntity>();
         try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
              Statement stmt = conn.createStatement();
@@ -87,6 +93,7 @@ public class BuildingRepositoryImpl implements BuildingRepository {
                 BuildingEntity dto = new BuildingEntity();
                 dto.setName(rs.getString("b.name"));
                 dto.setId(rs.getInt("b.id"));
+                dto.setDistrictId(rs.getInt("b.districtid"));
                 dto.setStreet(rs.getString("b.street"));
                 dto.setWard(rs.getString("b.ward"));
                 dto.setRentPrice(rs.getLong("b.rentPrice"));
