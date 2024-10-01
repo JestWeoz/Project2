@@ -27,15 +27,15 @@ public class BuildingRepositoryImpl implements BuildingRepository {
             sql.append(" INNER JOIN buildingrenttype on b.id = buildingrenttype.buildingid ");
             sql.append(" INNER JOIN renttype on renttype.id = buildingrenttype.renttypeid ");
         }
-        String rentAreaTo = String.valueOf(params.get("areaTo"));
-        String rentAreaFrom = String.valueOf(params.get("areaFrom"));
+        String rentAreaTo = String.valueOf(params.get("rentAreaTo"));
+        String rentAreaFrom = String.valueOf(params.get("rentAreaFrom"));
         if (StringUtil.checkString(rentAreaFrom) || StringUtil.checkString(rentAreaTo)) {
             sql.append(" INNER JOIN rentarea on rentarea.buildingid = b.id ");
         }
     }
     public static void queryNormal(Map<String, Object> params, StringBuilder where) {
         for(Map.Entry<String, Object> entry : params.entrySet()) {
-            if(!entry.getKey().equals("staffId") && !entry.getKey().equals("typeCode") && !entry.getKey().startsWith("area") && !entry.getKey().startsWith("rentPrice")) {
+            if(!entry.getKey().equals("staffId") && !entry.getKey().equals("typeCode") && !entry.getKey().startsWith("rentArea") && !entry.getKey().startsWith("rentPrice")) {
                 String value = String.valueOf(entry.getValue());
                 if (NumberUtil.isNumber(value)) {
                     where.append(" AND b.").append(entry.getKey()).append(" = ").append(value).append(" ");
@@ -77,7 +77,7 @@ public class BuildingRepositoryImpl implements BuildingRepository {
 
     @Override
     public List<BuildingEntity> findAll(Map<String, Object> params, List<String> typeCode) {
-        StringBuilder sql = new StringBuilder(" SELECT b.* FROM building b ");
+        StringBuilder sql = new StringBuilder(" SELECT distinct b.* FROM building b ");
         joinTable(params, typeCode, sql);
         StringBuilder where = new StringBuilder(" WHERE 1 = 1 ");
         queryNormal(params, where);
