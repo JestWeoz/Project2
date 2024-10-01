@@ -8,13 +8,13 @@ import com.example.project2.repository.entity.BuildingEntity;
 import com.example.project2.repository.entity.DistrictEntity;
 import com.example.project2.repository.entity.RentAreaEntity;
 import com.example.project2.service.BuildingService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,24 +29,21 @@ public class BuildingServiceImpl implements BuildingService {
     @Autowired
     private RentAreaRepository rentAreaRepository;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @Override
     public List<BuildingDTO> findAll(Map<String, Object> params, List<String> typeCode) {
 
         List<BuildingEntity> buildingEntities = buildingRepository.findAll(params, typeCode);
         List<BuildingDTO> buildingDTOS = new ArrayList<>();
         for (BuildingEntity item : buildingEntities) {
-            BuildingDTO buildingDTO = new BuildingDTO();
-            buildingDTO.setBuildingName(item.getName());
-            buildingDTO.setPhoneNumber(item.getManagerPhoneNumber());
+            BuildingDTO buildingDTO = modelMapper.map(item, BuildingDTO.class);
             List<RentAreaEntity> rentAreaEntities = rentAreaRepository.getValueById(item.getId());
             String rentAreaValue = rentAreaEntities.stream().map(it -> it.getValue().toString()).collect(Collectors.joining(","));
             buildingDTO.setRentArea(rentAreaValue);
             DistrictEntity district = districtRepository.findNameById(item.getDistrictId());
             buildingDTO.setAddress(item.getStreet() + ", " + item.getWard() + ", " + district.getDistrictName());
-            buildingDTO.setFloorArea(item.getFloorArea());
-            buildingDTO.setManagerName(item.getManagerName());
-            buildingDTO.setRentPrice(item.getRentPrice());
-            buildingDTO.getNumberOfBasement(item.getNumberOfBasement());
             buildingDTOS.add(buildingDTO);
         }
         return buildingDTOS;

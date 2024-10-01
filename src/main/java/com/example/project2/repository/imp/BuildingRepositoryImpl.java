@@ -91,7 +91,7 @@ public class BuildingRepositoryImpl implements BuildingRepository {
              ResultSet rs = stmt.executeQuery(sql.toString())) {
             while (rs.next()) {
                 BuildingEntity dto = new BuildingEntity();
-                dto.setName(rs.getString("b.name"));
+                dto.setBuildingName(rs.getString("b.name"));
                 dto.setId(rs.getInt("b.id"));
                 dto.setDistrictId(rs.getInt("b.districtid"));
                 dto.setStreet(rs.getString("b.street"));
@@ -101,6 +101,8 @@ public class BuildingRepositoryImpl implements BuildingRepository {
                 dto.setManagerPhoneNumber(rs.getString("b.managerphonenumber"));
                 dto.setManagerName(rs.getString("b.managername"));
                 dto.setFloorArea(rs.getLong("b.floorarea"));
+                dto.setServiceFee(rs.getString("b.servicefee"));
+                dto.setBrokerageFee(rs.getString("b.brokeragefee"));
                 results.add(dto);
             }
         } catch (SQLException e) {
