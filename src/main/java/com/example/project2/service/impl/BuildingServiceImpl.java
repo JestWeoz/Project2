@@ -1,5 +1,7 @@
 package com.example.project2.service.impl;
 
+import com.example.project2.builder.BuildingSearchBuilder;
+import com.example.project2.converter.BuildingSearchBuilderConverter;
 import com.example.project2.model.BuildingDTO;
 import com.example.project2.repository.BuildingRepository;
 import com.example.project2.repository.DistrictRepository;
@@ -32,10 +34,15 @@ public class BuildingServiceImpl implements BuildingService {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private BuildingSearchBuilderConverter buildingSearchBuilderConverter;
+
     @Override
     public List<BuildingDTO> findAll(Map<String, Object> params, List<String> typeCode) {
 
-        List<BuildingEntity> buildingEntities = buildingRepository.findAll(params, typeCode);
+
+        BuildingSearchBuilder buildingSearchBuilder = buildingSearchBuilderConverter.toBuildingSearchBuilder(params, typeCode);
+        List<BuildingEntity> buildingEntities = buildingRepository.findAll(buildingSearchBuilder);
         List<BuildingDTO> buildingDTOS = new ArrayList<>();
         for (BuildingEntity item : buildingEntities) {
             BuildingDTO buildingDTO = modelMapper.map(item, BuildingDTO.class);

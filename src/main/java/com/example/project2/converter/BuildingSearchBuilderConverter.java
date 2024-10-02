@@ -2,10 +2,11 @@ package com.example.project2.converter;
 
 import com.example.project2.builder.BuildingSearchBuilder;
 import com.example.project2.utils.MapUtil;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
-
+@Component
 public class BuildingSearchBuilderConverter {
     public BuildingSearchBuilder toBuildingSearchBuilder(Map<String, Object> params, List<String> typeCode) {
         BuildingSearchBuilder buildingSearchBuilder = new BuildingSearchBuilder.Builder()
@@ -22,6 +23,7 @@ public class BuildingSearchBuilderConverter {
                 .setManagerPhoneNumber(MapUtil.getObject(params, "managerphonenumber", String.class))
                 .setRentPriceFrom(MapUtil.getObject(params, "rentpricefrom", Long.class))
                 .setRentPriceTo(MapUtil.getObject(params, "rentpriceto", Long.class))
+                .setStreet(MapUtil.getObject(params, "street", String.class))
                 .build();
         return buildingSearchBuilder;
     }
