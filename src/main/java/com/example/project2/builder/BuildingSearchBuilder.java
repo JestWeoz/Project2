@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BuildingSearchBuilder {
-    private String name, ward, street, districtCode, managerName, managerPhoneNumber;
+    private String name, ward, street, districtId, managerName, managerPhoneNumber;
     private Integer numberOfBasement;
     private Long floorArea, rentPriceFrom, rentPriceTo, areaFrom, areaTo, staffId;
     private List<String> typeCode = new ArrayList<String>();
@@ -13,7 +13,7 @@ public class BuildingSearchBuilder {
         this.name = builder.name;
         this.ward = builder.ward;
         this.street = builder.street;
-        this.districtCode = builder.districtCode;
+        this.districtId = builder.districtCode;
         this.managerName = builder.managerName;
         this.managerPhoneNumber = builder.managerPhoneNumber;
         this.numberOfBasement = builder.numberOfBasement;
@@ -38,8 +38,8 @@ public class BuildingSearchBuilder {
         return street;
     }
 
-    public String getDistrictCode() {
-        return districtCode;
+    public String getDistrictId() {
+        return districtId;
     }
 
     public String getManagerName() {
