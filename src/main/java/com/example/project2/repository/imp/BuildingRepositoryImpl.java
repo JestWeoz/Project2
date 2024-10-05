@@ -96,8 +96,7 @@ public class BuildingRepositoryImpl implements BuildingRepository {
         queryNormal(buildingSearchBuilder, where);
         querySpecial(buildingSearchBuilder, where);
         where.append(" ORDER BY b.id ");
-        sql.append(where.toString());;
-        System.out.println(sql.toString());
+        sql.append(where);
         List<BuildingEntity> results = new ArrayList<BuildingEntity>();
         try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
              Statement stmt = conn.createStatement();
