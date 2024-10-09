@@ -3,15 +3,12 @@ package com.example.project2.repository.imp;
 import com.example.project2.builder.BuildingSearchBuilder;
 import com.example.project2.repository.BuildingRepository;
 import com.example.project2.repository.entity.BuildingEntity;
-import com.example.project2.utils.NumberUtil;
-import com.example.project2.utils.StringUtil;
 import org.springframework.stereotype.Repository;
 
 import java.lang.reflect.Field;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Repository
 
@@ -103,9 +100,8 @@ public class BuildingRepositoryImpl implements BuildingRepository {
              ResultSet rs = stmt.executeQuery(sql.toString())) {
             while (rs.next()) {
                 BuildingEntity dto = new BuildingEntity();
-                dto.setBuildingName(rs.getString("b.name"));
+                dto.setName(rs.getString("b.name"));
                 dto.setId(rs.getInt("b.id"));
-                dto.setDistrictId(rs.getInt("b.districtid"));
                 dto.setStreet(rs.getString("b.street"));
                 dto.setWard(rs.getString("b.ward"));
                 dto.setRentPrice(rs.getLong("b.rentPrice"));

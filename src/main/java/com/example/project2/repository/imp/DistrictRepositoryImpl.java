@@ -17,7 +17,6 @@ public class DistrictRepositoryImpl implements DistrictRepository {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql.toString())) {
             while (rs.next()) {
-                d.setDistrictName(rs.getString("name"));
             }
         } catch (SQLException e) {
            e.printStackTrace();

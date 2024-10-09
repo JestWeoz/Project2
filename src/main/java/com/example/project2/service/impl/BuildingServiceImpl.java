@@ -49,8 +49,6 @@ public class BuildingServiceImpl implements BuildingService {
             List<RentAreaEntity> rentAreaEntities = rentAreaRepository.getValueById(item.getId());
             String rentAreaValue = rentAreaEntities.stream().map(it -> it.getValue().toString()).collect(Collectors.joining(","));
             buildingDTO.setRentArea(rentAreaValue);
-            DistrictEntity district = districtRepository.findNameById(item.getDistrictId());
-            buildingDTO.setAddress(item.getStreet() + ", " + item.getWard() + ", " + district.getDistrictName());
             buildingDTOS.add(buildingDTO);
         }
         return buildingDTOS;
