@@ -53,14 +53,14 @@ public class BuildingEntity {
     private DistrictEntity district;
 
     @OneToMany(mappedBy = "building", fetch = FetchType.LAZY)
-    private List<RentAreaEntity> items = new ArrayList<RentAreaEntity>();
+    private List<RentAreaEntity> rentAreaEntity = new ArrayList<RentAreaEntity>();
 
-    public List<RentAreaEntity> getItems() {
-        return items;
+    public List<RentAreaEntity> getRentAreaEntity() {
+        return rentAreaEntity;
     }
 
-    public void setItems(List<RentAreaEntity> items) {
-        this.items = items;
+    public void setRentAreaEntity(List<RentAreaEntity> items) {
+        this.rentAreaEntity = items;
     }
 
     public DistrictEntity getDistrict() {

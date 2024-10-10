@@ -46,9 +46,13 @@ public class BuildingServiceImpl implements BuildingService {
         List<BuildingDTO> buildingDTOS = new ArrayList<>();
         for (BuildingEntity item : buildingEntities) {
             BuildingDTO buildingDTO = modelMapper.map(item, BuildingDTO.class);
-            List<RentAreaEntity> rentAreaEntities = rentAreaRepository.getValueById(item.getId());
-            String rentAreaValue = rentAreaEntities.stream().map(it -> it.getValue().toString()).collect(Collectors.joining(","));
-            buildingDTO.setRentArea(rentAreaValue);
+            buildingDTO.setBuildingName(item.getName());
+            buildingDTO.setAddress(item.getStreet() + " " + item.getWard() + " " + item.getDistrict());
+            buildingDTO.setRentPrice(item.getRentPrice());
+            buildingDTO.setFloorArea(item.getFloorArea());
+            buildingDTO.setRentArea(item.getRentAreaEntity().toString());
+            buildingDTO.setManagerName(item.getManagerName());
+            buildingDTO.setPhoneNumber(item.getManagerPhoneNumber());
             buildingDTOS.add(buildingDTO);
         }
         return buildingDTOS;
