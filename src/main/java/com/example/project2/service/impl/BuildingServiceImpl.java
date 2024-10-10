@@ -26,12 +26,6 @@ public class BuildingServiceImpl implements BuildingService {
     private BuildingRepository buildingRepository;
 
     @Autowired
-    private DistrictRepository districtRepository;
-
-    @Autowired
-    private RentAreaRepository rentAreaRepository;
-
-    @Autowired
     private ModelMapper modelMapper;
 
     @Autowired
@@ -47,9 +41,11 @@ public class BuildingServiceImpl implements BuildingService {
         for (BuildingEntity item : buildingEntities) {
             BuildingDTO buildingDTO = modelMapper.map(item, BuildingDTO.class);
             buildingDTO.setBuildingName(item.getName());
-            buildingDTO.setAddress(item.getStreet() + " " + item.getWard() + " " + item.getDistrict());
+            buildingDTO.setAddress(item.getStreet() + " " + item.getWard() + " " + item.getDistrict().getName());
             buildingDTO.setRentPrice(item.getRentPrice());
             buildingDTO.setFloorArea(item.getFloorArea());
+            List<RentAreaEntity> list = item.getRentAreaEntity();
+            String sad = list.stream().map(item, );
             buildingDTO.setRentArea(item.getRentAreaEntity().toString());
             buildingDTO.setManagerName(item.getManagerName());
             buildingDTO.setPhoneNumber(item.getManagerPhoneNumber());

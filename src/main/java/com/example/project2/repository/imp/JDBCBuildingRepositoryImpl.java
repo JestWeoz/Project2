@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 
 public class JDBCBuildingRepositoryImpl implements BuildingRepository {
-    static final String DB_URL = "jdbc:mysql://localhost:3306/estatebasic";
+    static final String DB_URL = "jdbc:mysql://localhost:3306/test";
     static final String USER = "root";
     static final String PASS = "123456";
 

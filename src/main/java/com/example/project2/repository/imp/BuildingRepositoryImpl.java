@@ -6,9 +6,12 @@ import com.example.project2.repository.entity.BuildingEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
+@Primary
 public class BuildingRepositoryImpl implements BuildingRepository {
 
     @PersistenceContext
