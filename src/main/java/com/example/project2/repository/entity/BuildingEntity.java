@@ -11,7 +11,7 @@ public class BuildingEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @Column(name = "name")
     private String name;
@@ -78,7 +78,7 @@ public class BuildingEntity {
     public void setServiceFee(String serviceFee) {
         this.serviceFee = serviceFee;
     }
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -90,7 +90,7 @@ public class BuildingEntity {
 //        this.districtId = districtId;
 //    }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

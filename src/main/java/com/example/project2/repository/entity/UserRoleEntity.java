@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = )
+@Table(name = "user_role")
 public class UserRoleEntity {
+
 }

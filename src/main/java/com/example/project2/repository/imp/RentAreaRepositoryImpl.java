@@ -14,7 +14,7 @@ import java.util.List;
 public class RentAreaRepositoryImpl implements RentAreaRepository {
 
     @Override
-    public List<RentAreaEntity> getValueById(int id) {
+    public List<RentAreaEntity> getValueById(long id) {
         String sql = "select * from rentarea where rentarea.buildingid = " + id + "; ";
         List<RentAreaEntity> rentAreas = new ArrayList<RentAreaEntity>();
         try (Connection conn = ConnectionJDBCUtil.getConnection();
