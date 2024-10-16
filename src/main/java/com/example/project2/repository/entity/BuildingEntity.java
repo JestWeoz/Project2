@@ -15,12 +15,19 @@ public class BuildingEntity {
     private String name;
     private String street;
     private String ward;
+    @Column(name = "brokeragefee")
     private String brokerageFee;
+    @Column(name = "servicefee")
     private String serviceFee;
+    @Column(name = "numberofbasement")
     private long numberOfBasement;
+    @Column(name = "floorarea")
     private long floorArea;
+    @Column(name = "rentprice")
     private long rentPrice;
+    @Column(name = "managername")
     private String managerName;
+    @Column(name = "managerphonenumber")
     private String managerPhoneNumber;
 
 
