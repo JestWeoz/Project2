@@ -28,8 +28,16 @@ public class UserEntity {
     @Column(name = "fullname")
     private String fullName;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    List<UserRoleEntity> userRolesEntity = new ArrayList<UserRoleEntity>();
+    @ManyToMany(mappedBy = "users",fetch = FetchType.LAZY)
+    private List<RoleEntity> roles = new ArrayList<>();
+
+    public List<RoleEntity> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<RoleEntity> roles) {
+        this.roles = roles;
+    }
 
     public long getId() {
         return id;
@@ -77,13 +85,5 @@ public class UserEntity {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
-    }
-
-    public List<UserRoleEntity> getUserRolesEntity() {
-        return userRolesEntity;
-    }
-
-    public void setUserRolesEntity(List<UserRoleEntity> userRolesEntity) {
-        this.userRolesEntity = userRolesEntity;
     }
 }

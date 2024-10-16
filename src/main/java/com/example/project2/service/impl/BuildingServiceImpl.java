@@ -45,8 +45,8 @@ public class BuildingServiceImpl implements BuildingService {
             buildingDTO.setRentPrice(item.getRentPrice());
             buildingDTO.setFloorArea(item.getFloorArea());
             List<RentAreaEntity> list = item.getRentAreaEntity();
-            String sad = list.stream().map(item, );
-            buildingDTO.setRentArea(item.getRentAreaEntity().toString());
+            String sad = list.stream().map(it -> it.getValue().toString()).collect(Collectors.joining(","));
+            buildingDTO.setRentArea(sad);
             buildingDTO.setManagerName(item.getManagerName());
             buildingDTO.setPhoneNumber(item.getManagerPhoneNumber());
             buildingDTOS.add(buildingDTO);
